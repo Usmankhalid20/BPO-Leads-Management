@@ -217,6 +217,7 @@ NEXT_PUBLIC_SUPPORT_PHONE=1-800-555-0123
 ### Notes on env vars
 
 - `MONGODB_URI` is required
+- `MONGO_URL` or `DATABASE_URL` also work as aliases
 - `JWT_SECRET` is required for secure admin auth
 - `NEXT_PUBLIC_JORNAYA_SCRIPT_SRC` is optional, but needed for real Jornaya capture
 - `NEXT_PUBLIC_SUPPORT_PHONE` controls the support phone shown in the UI
