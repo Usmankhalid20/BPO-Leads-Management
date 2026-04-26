@@ -102,8 +102,8 @@ export default async function LeadsPage({ searchParams }: { searchParams: Record
             </Thead>
             <Tbody>
               {leads.map((lead) => (
-                <Tr key={lead._id}>
-                  <Td className="font-mono text-xs">{lead.id || lead._id?.slice(-8)}</Td>
+                <Tr key={lead.id}>
+                  <Td className="font-mono text-xs">{lead.id}</Td>
                   <Td>{lead.first_name}</Td>
                   <Td>{lead.last_name}</Td>
                   <Td>{lead.email || "-"}</Td>
@@ -127,7 +127,7 @@ export default async function LeadsPage({ searchParams }: { searchParams: Record
                   </Td>
                   <Td>
                     <div className="flex flex-wrap gap-2">
-                      <Link href={`/admin/leads/${lead._id}`} className="inline-flex rounded-lg border border-slate-200 px-3 py-2 text-slate-700 hover:bg-slate-50">
+                      <Link href={`/admin/leads/${lead.id}`} className="inline-flex rounded-lg border border-slate-200 px-3 py-2 text-slate-700 hover:bg-slate-50">
                         <Eye className="h-4 w-4" />
                       </Link>
                       <button type="button" className="rounded-lg border border-slate-200 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">

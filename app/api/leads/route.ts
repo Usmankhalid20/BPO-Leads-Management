@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const requestIp = getRequestIP(request);
     const ipLookup = await enrichIpAddress(requestIp);
     const referenceId = randomUUID();
-    const jornayaLeadId = String(data.jornaya_lead_id || referenceId);
+    const jornayaLeadId = String(data.jornaya_lead_id || "");
 
     const lead = await createLead({
       id: referenceId,

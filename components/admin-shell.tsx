@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { LayoutDashboard, ListChecks, Settings, Users, Shield, LogOut } from "lucide-react";
+import { LayoutDashboard, ListChecks, Settings, Users, Shield, LogOut, BarChart3 } from "lucide-react";
 
 const nav = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin/reports", label: "Reports", icon: BarChart3 },
   { href: "/admin/leads", label: "Leads", icon: ListChecks },
   { href: "/admin/admin-management", label: "Admins", icon: Users },
   { href: "/admin/settings", label: "Settings", icon: Settings }

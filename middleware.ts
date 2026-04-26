@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { verifyAuthToken } from "@/lib/auth";
 
-const PROTECTED_PATHS = ["/admin/dashboard", "/admin/leads", "/admin/admin-management", "/admin/settings", "/api/admin/leads", "/api/admin/admins"];
+const PROTECTED_PATHS = ["/admin/dashboard", "/admin/reports", "/admin/leads", "/admin/admin-management", "/admin/settings", "/api/admin/leads", "/api/admin/admins"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -21,5 +21,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/admin/dashboard/:path*", "/admin/leads/:path*", "/admin/admin-management/:path*", "/admin/settings/:path*"]
+  matcher: ["/admin/dashboard/:path*", "/admin/reports/:path*", "/admin/leads/:path*", "/admin/admin-management/:path*", "/admin/settings/:path*"]
 };
