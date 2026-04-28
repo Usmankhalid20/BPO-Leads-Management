@@ -1,3 +1,6 @@
+"use client";
+
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Select } from "@/components/ui/select";
@@ -40,6 +43,20 @@ function activeItems(values: FilterValues) {
   ].filter(Boolean) as Array<{ label: string; value: string }>;
 }
 
+function buildQuery(form: HTMLFormElement) {
+  const params = new URLSearchParams();
+  const data = new FormData(form);
+  for (const [key, rawValue] of data.entries()) {
+    const value = String(rawValue).trim();
+    if (!value) continue;
+    if (value === "All") continue;
+    params.set(key, value);
+  }
+  const range = String(data.get("range") || "30d");
+  if (!params.get("range")) params.set("range", range);
+  return params;
+}
+
 export function DashboardFilters({
   values,
   action = "/admin/dashboard",
@@ -51,12 +68,28 @@ export function DashboardFilters({
   showStatus?: boolean;
   showSource?: boolean;
 }) {
+  const router = useRouter();
   const active = activeItems(values);
-  const resetHref = action;
+
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const params = buildQuery(form);
+    const range = params.get("range");
+    if (range === "custom" && !params.get("from") && !params.get("to")) {
+      form.querySelector<HTMLInputElement>('input[name="from"]')?.focus();
+      return;
+    }
+    router.push(`${action}?${params.toString()}`);
+  }
+
+  function handleReset() {
+    router.push(action);
+  }
 
   return (
     <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-soft">
-      <form action={action} method="get" className="grid gap-3 lg:grid-cols-12">
+      <form onSubmit={handleSubmit} className="grid gap-3 lg:grid-cols-12">
         <Select name="range" defaultValue={values.range || "30d"} className="lg:col-span-2">
           <option value="today">Today</option>
           <option value="7d">Last 7 Days</option>
@@ -101,12 +134,9 @@ export function DashboardFilters({
           <Button type="submit" className="flex-1">
             Apply Filters
           </Button>
-          <Link
-            href={resetHref}
-            className="inline-flex h-10 items-center justify-center rounded-xl border border-slate-200 bg-white px-4 text-sm font-medium text-slate-900 hover:bg-slate-50"
-          >
+          <Button type="button" variant="outline" className="flex-1" onClick={handleReset}>
             Reset Filters
-          </Link>
+          </Button>
         </div>
       </form>
 
