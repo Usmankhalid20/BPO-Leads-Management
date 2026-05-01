@@ -82,7 +82,7 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">Reference ID</p>
+              <p className="text-xs uppercase tracking-wide text-slate-500">MongoDB Object ID</p>
               <p className="font-mono text-slate-900">{lead.id}</p>
             </div>
             <div className="flex items-center justify-between gap-3">
