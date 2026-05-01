@@ -67,7 +67,7 @@ export function LeadsFilters({ values, action = "/admin/leads" }: { values: Filt
           <Input
             name="search"
             type="search"
-            placeholder="Name, phone, email, or Jornaya ID"
+            placeholder="Name, phone, email, or MongoDB ID"
             defaultValue={firstValue(values.search)}
             className="h-11"
           />

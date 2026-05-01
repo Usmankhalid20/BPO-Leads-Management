@@ -14,6 +14,19 @@ export function formatDate(value?: string | Date) {
   }).format(date);
 }
 
+export function formatDateInTimeZone(value?: string | Date, timeZone?: string | null) {
+  if (!value) return "-";
+  const date = typeof value === "string" ? new Date(value) : value;
+  const options: Intl.DateTimeFormatOptions = {
+    dateStyle: "medium",
+    timeStyle: "short"
+  };
+  if (timeZone) {
+    options.timeZone = timeZone;
+  }
+  return new Intl.DateTimeFormat("en-US", options).format(date);
+}
+
 export function formatDateOnly(value?: string) {
   if (!value) return "-";
   const date = new Date(value);

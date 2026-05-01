@@ -75,15 +75,14 @@ export default async function LeadsPage({
         </CardHeader>
         <CardContent className="p-0">
           <div className="grid gap-4 p-4 2xl:hidden">
-            {leads.map((lead) => (
+            {leads.map((lead, index) => (
               <article key={lead.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0">
-                    <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Lead</p>
+                    <p className="text-xs font-medium uppercase tracking-wide text-slate-500">Sr No. {start + index}</p>
                     <h4 className="truncate text-lg font-semibold text-slate-900">
                       {lead.first_name} {lead.last_name}
                     </h4>
-                    <p className="mt-1 truncate font-mono text-xs text-slate-500">{lead.id}</p>
                   </div>
                   <Badge className="bg-blue-50 text-blue-700">{lead.state}</Badge>
                 </div>
@@ -158,7 +157,7 @@ export default async function LeadsPage({
             <Table>
               <Thead className="sticky top-0 z-10">
                 <Tr>
-                  {["ID", "First Name", "Last Name", "Email", "Phone", "Zipcode", "State", "Date of Birth", "Gender", "Date Created", "Jornaya Lead ID", "IP Address", "Actions"].map((column) => (
+                  {["Sr No.", "First Name", "Last Name", "Email", "Phone", "Zipcode", "State", "Date of Birth", "Gender", "Date Created", "Jornaya Lead ID", "IP Address", "Actions"].map((column) => (
                     <Th key={column} className="whitespace-nowrap">
                       {column}
                     </Th>
@@ -166,9 +165,9 @@ export default async function LeadsPage({
                 </Tr>
               </Thead>
               <Tbody>
-                {leads.map((lead) => (
+                {leads.map((lead, index) => (
                   <Tr key={lead.id}>
-                    <Td className="max-w-[180px] truncate font-mono text-xs">{lead.id}</Td>
+                    <Td className="whitespace-nowrap font-medium text-slate-900">{start + index}</Td>
                     <Td className="whitespace-nowrap">{lead.first_name}</Td>
                     <Td className="whitespace-nowrap">{lead.last_name}</Td>
                     <Td className="max-w-[220px] truncate">{lead.email || "-"}</Td>
