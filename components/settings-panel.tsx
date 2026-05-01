@@ -9,14 +9,14 @@ export function SettingsPanel() {
   const [active, setActive] = useState<(typeof tabs)[number]>("General Settings");
 
   return (
-    <div className="mt-6">
-      <div className="inline-flex rounded-xl bg-slate-100 p-1">
+    <div className="mt-6 space-y-4">
+      <div className="flex flex-wrap gap-2 rounded-xl bg-slate-100 p-1">
         {tabs.map((tab) => (
           <button
             key={tab}
             type="button"
             onClick={() => setActive(tab)}
-            className={`rounded-lg px-4 py-2 text-sm font-medium transition ${active === tab ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"}`}
+            className={`flex-1 rounded-lg px-3 py-2 text-sm font-medium transition sm:flex-none sm:px-4 ${active === tab ? "bg-white text-slate-900 shadow-sm" : "text-slate-500 hover:text-slate-900"}`}
           >
             {tab}
           </button>
@@ -30,7 +30,7 @@ export function SettingsPanel() {
           {active === "General Settings" ? (
             <>
               <p className="text-sm text-slate-600">Branding, lead routing, and portal preferences.</p>
-              <label className="flex items-center justify-between rounded-xl border border-slate-200 px-4 py-3 text-sm">
+              <label className="flex flex-col gap-3 rounded-xl border border-slate-200 px-4 py-3 text-sm sm:flex-row sm:items-center sm:justify-between">
                 Dark mode toggle
                 <input type="checkbox" />
               </label>

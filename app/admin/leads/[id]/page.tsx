@@ -22,22 +22,22 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
 
   return (
     <AdminShell role="SUPER_ADMIN">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <Link href="/admin/leads" className="inline-flex items-center gap-2 text-sm font-medium text-slate-700">
           <ArrowLeft className="h-4 w-4" /> Back
         </Link>
-        <div className="flex gap-2">
-          <Button variant="outline">
+        <div className="flex flex-col gap-2 sm:flex-row">
+          <Button className="w-full sm:w-auto" variant="outline">
             <CheckCircle2 className="h-4 w-4" />
             Mark as Contacted
           </Button>
-          <Button variant="outline">
+          <Button className="w-full sm:w-auto" variant="outline">
             <BadgeCheck className="h-4 w-4" />
             Mark as Converted
           </Button>
           <Link
             href={`/api/admin/leads/export?${new URLSearchParams({ id: lead.id }).toString()}`}
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 sm:w-auto"
           >
             <Download className="h-4 w-4" />
             Export Lead
@@ -45,8 +45,8 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
         </div>
       </div>
 
-      <div className="mt-4 flex items-center gap-3">
-        <h2 className="text-3xl font-semibold">
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <h2 className="text-2xl font-semibold sm:text-3xl">
           {lead.first_name} {lead.last_name}
         </h2>
         <span className="rounded-full bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700">{lead.status}</span>

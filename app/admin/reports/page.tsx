@@ -23,7 +23,7 @@ export default async function ReportsPage({ searchParams }: { searchParams: Reco
       <div className="mb-6 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
           <p className="text-sm text-slate-500">Call Experts BPO</p>
-          <h2 className="text-3xl font-semibold tracking-tight text-slate-900">Reports</h2>
+          <h2 className="text-2xl font-semibold tracking-tight text-slate-900 sm:text-3xl">Reports</h2>
           <p className="mt-1 text-sm text-slate-500">Expanded analytics, exports, and summary reporting.</p>
         </div>
         <ReportActions csvHref={csvHref} />

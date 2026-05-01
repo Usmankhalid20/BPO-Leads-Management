@@ -35,12 +35,12 @@ export function AdminCreateModal() {
 
   return (
     <>
-      <Button onClick={() => setOpen(true)}>Create Admin</Button>
+      <Button className="w-full sm:w-auto" onClick={() => setOpen(true)}>Create Admin</Button>
       <Dialog open={open}>
-        <div className="w-full max-w-lg rounded-2xl bg-white p-6 shadow-soft">
-          <div className="mb-4 flex items-center justify-between">
+        <div className="w-full max-w-lg max-h-[calc(100vh-2rem)] overflow-y-auto rounded-2xl bg-white p-4 shadow-soft sm:p-6">
+          <div className="mb-4 flex items-start justify-between gap-4">
             <h3 className="text-lg font-semibold text-slate-900">Create Admin</h3>
-            <button type="button" className="text-sm text-slate-500" onClick={() => setOpen(false)}>
+            <button type="button" className="text-sm text-slate-500 hover:text-slate-900" onClick={() => setOpen(false)}>
               Close
             </button>
           </div>
@@ -57,11 +57,11 @@ export function AdminCreateModal() {
               <option value="DISABLED">DISABLED</option>
             </Select>
             {error ? <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div> : null}
-            <div className="flex justify-end gap-2">
-              <Button variant="outline" type="button" onClick={() => setOpen(false)}>
+            <div className="flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <Button variant="outline" type="button" className="w-full sm:w-auto" onClick={() => setOpen(false)}>
                 Cancel
               </Button>
-              <Button type="submit" disabled={loading}>
+              <Button type="submit" className="w-full sm:w-auto" disabled={loading}>
                 {loading ? "Creating..." : "Create"}
               </Button>
             </div>

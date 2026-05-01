@@ -49,7 +49,7 @@ export default function LoginPage() {
               <p className="text-sm text-slate-500">Call Experts BPO</p>
             </div>
           </div>
-          <h1 className="mt-10 text-4xl font-semibold tracking-tight text-slate-900 lg:text-5xl">
+          <h1 className="mt-10 text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl">
             Secure admin access for Medicare lead operations.
           </h1>
           <p className="mt-4 max-w-lg text-base leading-7 text-slate-600">
@@ -67,7 +67,7 @@ export default function LoginPage() {
       </section>
 
       <section className="flex items-center justify-center px-4 py-12">
-        <form onSubmit={handleSubmit} className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+        <form onSubmit={handleSubmit} className="w-full max-w-md rounded-3xl border border-slate-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="mb-6">
             <p className="text-sm font-medium text-blue-600">Admin Portal</p>
             <h2 className="mt-2 text-3xl font-semibold tracking-tight text-slate-900">Sign in</h2>

@@ -59,7 +59,7 @@ function ChartCard({
   title,
   description,
   children,
-  height = "h-[360px]"
+  height = "h-[320px] sm:h-[360px]"
 }: {
   title: string;
   description: string;
@@ -81,7 +81,7 @@ function LatestLeadsTable({ data }: { data: any }) {
   return (
     <Card className="border-slate-200/80 shadow-sm">
       <CardHeader className="border-b border-slate-100 pb-4">
-        <div className="flex items-center justify-between gap-4">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
           <div>
             <h3 className="font-semibold text-slate-900">Latest Leads</h3>
             <p className="text-sm text-slate-500">The 10 most recent submissions.</p>
@@ -91,33 +91,54 @@ function LatestLeadsTable({ data }: { data: any }) {
           </Link>
         </div>
       </CardHeader>
-      <CardContent className="overflow-x-auto p-0">
-        <table className="w-full text-sm">
-          <thead className="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
-            <tr>
-              <th className="px-5 py-3">Name</th>
-              <th className="px-5 py-3">Phone</th>
-              <th className="px-5 py-3">State</th>
-              <th className="px-5 py-3">Date</th>
-              <th className="px-5 py-3">Status</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-100">
-            {data.latestLeads.map((lead: any) => (
-              <tr key={lead.id} className="hover:bg-slate-50">
-                <td className="px-5 py-4 font-medium text-slate-900">
-                  {lead.first_name} {lead.last_name}
-                </td>
-                <td className="px-5 py-4 text-slate-600">{lead.phone}</td>
-                <td className="px-5 py-4">
-                  <Badge className="bg-blue-50 text-blue-700">{lead.state}</Badge>
-                </td>
-                <td className="px-5 py-4 text-slate-600">{formatDate(lead.createdAt)}</td>
-                <td className="px-5 py-4 text-slate-600">{lead.status}</td>
+      <CardContent className="p-0">
+        <div className="grid gap-3 p-4 sm:hidden">
+          {data.latestLeads.map((lead: any) => (
+            <div key={lead.id} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate font-medium text-slate-900">
+                    {lead.first_name} {lead.last_name}
+                  </p>
+                  <p className="mt-1 text-xs text-slate-500">{lead.phone}</p>
+                </div>
+                <Badge className="bg-blue-50 text-blue-700">{lead.state}</Badge>
+              </div>
+              <div className="mt-3 flex items-center justify-between gap-3 text-sm">
+                <span className="text-slate-500">{formatDate(lead.createdAt)}</span>
+                <span className="font-medium text-slate-700">{lead.status}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="hidden overflow-x-auto sm:block">
+          <table className="w-full text-sm">
+            <thead className="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500">
+              <tr>
+                <th className="px-5 py-3">Name</th>
+                <th className="px-5 py-3">Phone</th>
+                <th className="px-5 py-3">State</th>
+                <th className="px-5 py-3">Date</th>
+                <th className="px-5 py-3">Status</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="divide-y divide-slate-100">
+              {data.latestLeads.map((lead: any) => (
+                <tr key={lead.id} className="hover:bg-slate-50">
+                  <td className="px-5 py-4 font-medium text-slate-900">
+                    {lead.first_name} {lead.last_name}
+                  </td>
+                  <td className="px-5 py-4 text-slate-600">{lead.phone}</td>
+                  <td className="px-5 py-4">
+                    <Badge className="bg-blue-50 text-blue-700">{lead.state}</Badge>
+                  </td>
+                  <td className="px-5 py-4 text-slate-600">{formatDate(lead.createdAt)}</td>
+                  <td className="px-5 py-4 text-slate-600">{lead.status}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </CardContent>
     </Card>
   );
