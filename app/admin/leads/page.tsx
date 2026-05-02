@@ -21,6 +21,7 @@ export default async function LeadsPage({
     Object.entries(searchParams).map(([key, value]) => [key, Array.isArray(value) ? value[0] : value])
   ) as Record<string, string | undefined>;
   const { leads, total, page, limit } = await getLeads(filters);
+ 
   const start = total === 0 ? 0 : (page - 1) * limit + 1;
   const end = Math.min(page * limit, total);
   const buildQuery = (extra: Record<string, string> = {}) => {
@@ -114,15 +115,15 @@ export default async function LeadsPage({
                   </div>
                   <div className="sm:col-span-2">
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">Jornaya Lead ID</p>
-                    <div className="mt-1 flex items-center gap-2">
-                      <span className="min-w-0 flex-1 truncate font-mono text-xs text-slate-700">{lead.jornaya_lead_id}</span>
-                      <CopyValue value={lead.jornaya_lead_id} label="Jornaya Lead ID" />
+                    <div className="mt-1 flex flex-col gap-2 sm:flex-row sm:items-center">
+                      <span className="break-all font-mono text-xs text-slate-700">{lead.leadId || lead.id || "-"}</span>
+                      <CopyValue value={lead.leadId} label="Jornaya Lead ID" />
                     </div>
                   </div>
                   <div className="sm:col-span-2">
                     <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">IP Address</p>
-                    <div className="mt-1 flex items-center gap-2">
-                      <span className="min-w-0 flex-1 truncate font-mono text-xs text-slate-700">{lead.ip_address}</span>
+                    <div className="mt-1 flex flex-col gap-2 sm:flex-row sm:items-center">
+                      <span className="break-all font-mono text-xs text-slate-700">{lead.ip_address || "-"}</span>
                       <CopyValue value={lead.ip_address} label="IP Address" />
                     </div>
                   </div>
@@ -182,14 +183,14 @@ export default async function LeadsPage({
                     </Td>
                     <Td className="whitespace-nowrap">{formatDate(lead.createdAt)}</Td>
                     <Td>
-                      <div className="flex items-center gap-2">
-                        <span className="max-w-[220px] truncate font-mono text-xs">{lead.jornaya_lead_id}</span>
+                      <div className="flex flex-col gap-2 xl:flex-row xl:items-center">
+                        <span className="break-all font-mono text-xs">{lead.jornaya_lead_id || "-"}</span>
                         <CopyValue value={lead.jornaya_lead_id} label="Jornaya Lead ID" />
                       </div>
                     </Td>
                     <Td>
-                      <div className="flex items-center gap-2">
-                        <span className="max-w-[180px] truncate font-mono text-xs">{lead.ip_address}</span>
+                      <div className="flex flex-col gap-2 xl:flex-row xl:items-center">
+                        <span className="break-all font-mono text-xs">{lead.ip_address || "-"}</span>
                         <CopyValue value={lead.ip_address} label="IP Address" />
                       </div>
                     </Td>

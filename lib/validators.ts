@@ -10,6 +10,7 @@ export const leadSubmissionSchema = z.object({
   phone: z.string().min(10, "Phone number is required"),
   email: z.string().email().optional().or(z.literal("")),
   jornaya_lead_id: z.string().optional().or(z.literal("")),
+  jornayaLeadId: z.string().optional().or(z.literal("")),
   consent: z.literal("on")
 });
 

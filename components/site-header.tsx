@@ -10,14 +10,14 @@ export function SiteHeader() {
             <ShieldCheck className="h-5 w-5" />
           </div>
           <div>
-            <p className="text-sm font-semibold text-slate-900">HealthPlanLocator</p>
-            <p className="text-xs text-slate-500">Call Experts BPO</p>
+            <p className="text-sm font-semibold text-slate-900">Qoute Experts</p>
+            {/* <p className="text-xs text-slate-500">Call Experts BPO</p> */}
           </div>
         </Link>
-        <a className="inline-flex items-center gap-2 text-sm font-medium text-slate-700" href={`tel:${process.env.NEXT_PUBLIC_SUPPORT_PHONE || "18005550123"}`}>
+        {/* <a className="inline-flex items-center gap-2 text-sm font-medium text-slate-700" href={`tel:${process.env.NEXT_PUBLIC_SUPPORT_PHONE || "18005550123"}`}>
           <Phone className="h-4 w-4" />
           {process.env.NEXT_PUBLIC_SUPPORT_PHONE || "1-800-555-0123"}
-        </a>
+        </a> */}
       </div>
     </header>
   );

@@ -5,6 +5,7 @@ export type InsuranceType = "Medicare" | "ACA";
 export type Lead = {
   id: string;
   _id?: string;
+  leadId: string;
   first_name: string;
   last_name: string;
   dob: string;
@@ -13,6 +14,7 @@ export type Lead = {
   gender: string;
   phone: string;
   email?: string;
+  jornayaLeadId: string;
   jornaya_lead_id: string;
   ip_address: string;
   createdAt: string;

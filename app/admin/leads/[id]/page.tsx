@@ -82,15 +82,15 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
           </CardHeader>
           <CardContent className="space-y-4 text-sm">
             <div>
-              <p className="text-xs uppercase tracking-wide text-slate-500">MongoDB Object ID</p>
-              <p className="font-mono text-slate-900">{lead.id}</p>
+              <p className="text-xs uppercase tracking-wide text-slate-500">Lead ID</p>
+              <p className="font-mono text-slate-900">{lead.leadId || lead.id}</p>
             </div>
             <div className="flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs uppercase tracking-wide text-slate-500">Jornaya Lead ID</p>
-                <p className="font-mono text-slate-900">{lead.jornaya_lead_id}</p>
+                <p className="font-mono text-slate-900">{lead.jornayaLeadId || lead.jornaya_lead_id || "Not Captured"}</p>
               </div>
-              <CopyValue value={lead.jornaya_lead_id} label="Jornaya Lead ID" />
+              <CopyValue value={lead.jornayaLeadId || lead.jornaya_lead_id || "Not Captured"} label="Jornaya Lead ID" />
             </div>
             <div className="flex items-center justify-between gap-3">
               <div>

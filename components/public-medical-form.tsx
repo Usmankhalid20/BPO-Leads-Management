@@ -9,22 +9,31 @@ import { Input } from "@/components/ui/input";
 import { Select } from "@/components/ui/select";
 import { STATES, GENDERS } from "@/lib/constants";
 
+function generateJornayaLeadId() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return `leadid_${Math.random().toString(36).slice(2)}_${Date.now().toString(36)}`;
+}
+
 export function PublicMedicalForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [consent, setConsent] = useState(false);
   const [landingPageUrl, setLandingPageUrl] = useState("");
+  const [jornayaLeadId, setJornayaLeadId] = useState("");
   const [utmSource] = useState("");
   const [utmCampaign] = useState("");
 
   useEffect(() => {
     setLandingPageUrl(window.location.href);
+    setJornayaLeadId(generateJornayaLeadId());
   }, []);
 
   const trustItems = useMemo(
     () => [
-      { title: "Jornaya", desc: "Auto-fills LeadiD at submit time" },
+      { title: "Lead ID", desc: "UUID generated before submit" },
       { title: "Security", desc: "IP captured server-side only" },
       { title: "CRM", desc: "Admin lead routing included" }
     ],
@@ -34,7 +43,6 @@ export function PublicMedicalForm() {
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
-    const jornaya = String(new FormData(form).get("jornaya_lead_id") || "").trim();
     if (!form.checkValidity()) {
       form.reportValidity();
       setError("Please complete the highlighted fields.");
@@ -47,11 +55,17 @@ export function PublicMedicalForm() {
     setLoading(true);
     setError("");
     try {
+      const leadId = jornayaLeadId || generateJornayaLeadId();
+      setJornayaLeadId(leadId);
+
       const formData = new FormData(form);
+      formData.set("jornaya_lead_id", leadId);
+      formData.set("jornayaLeadId", leadId);
+
       const res = await fetch("/api/leads", { method: "POST", body: formData });
       const json = await res.json();
       if (!res.ok) throw new Error(json?.error || "Unable to submit lead");
-      router.push(`/thank-you?ref=${encodeURIComponent(json.id || json.leadId)}&jornaya=${encodeURIComponent(json.jornaya_lead_id || jornaya)}`);
+      router.push(`/thank-you?ref=${encodeURIComponent(json.id || json.leadId)}&jornaya=${encodeURIComponent(json.jornaya_lead_id || leadId)}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
       setLoading(false);
@@ -69,7 +83,7 @@ export function PublicMedicalForm() {
           Compare Medicare plans with a clean, secure quote form.
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-base text-slate-600 lg:text-lg">
-          Built for ad traffic, Jornaya compliance, and secure server-side lead routing into the admin CRM.
+          Built for ad traffic, UUID lead IDs, and secure server-side lead routing into the admin CRM.
         </p>
       </div>
 
@@ -151,12 +165,15 @@ export function PublicMedicalForm() {
                   <Input name="phone" placeholder="5551234567" required />
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700">Email address <span className="text-slate-400">(optional)</span></label>
+                  <label className="text-sm font-medium text-slate-700">
+                    Email address <span className="text-slate-400">(optional)</span>
+                  </label>
                   <Input name="email" type="email" placeholder="you@example.com" />
                 </div>
               </div>
 
-              <input type="hidden" name="jornaya_lead_id" id="leadid_token" />
+              <input type="hidden" name="jornaya_lead_id" value={jornayaLeadId} readOnly />
+              <input type="hidden" name="jornayaLeadId" value={jornayaLeadId} readOnly />
               <input type="hidden" name="insurance_type" value="Medicare" />
               <input type="hidden" name="landing_page_url" value={landingPageUrl} />
               <input type="hidden" name="utm_source" value={utmSource} />

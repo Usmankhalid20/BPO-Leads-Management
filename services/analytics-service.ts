@@ -288,7 +288,7 @@ export async function getAnalyticsSnapshot(filters: AnalyticsFilters = {}): Prom
     { name: "Direct", value: sourceCounts["Direct"] || 0 }
   ];
 
-  const withJornaya = currentLeads.filter((lead) => String(lead.jornaya_lead_id || "").trim()).length;
+  const withJornaya = currentLeads.filter((lead) => String(lead.jornayaLeadId || lead.jornaya_lead_id || "").trim()).length;
   const missingJornaya = totalLeads - withJornaya;
   const missingIp = currentLeads.filter((lead) => !String(lead.ip_address || "").trim() || lead.ip_address === "unknown").length;
 
