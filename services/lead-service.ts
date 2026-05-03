@@ -7,8 +7,11 @@ function normalizeLead(doc: any): Lead {
   if (!lead) return lead;
   return {
     ...lead,
-    id: String(lead._id),
+    id: String(lead.id || lead.leadId || lead._id),
     _id: String(lead._id),
+    leadId: String(lead.leadId || lead.id || lead._id),
+    jornayaLeadId: String(lead.jornayaLeadId || lead.jornaya_lead_id || ""),
+    jornaya_lead_id: String(lead.jornayaLeadId || lead.jornaya_lead_id || ""),
     createdAt: lead.createdAt instanceof Date ? lead.createdAt.toISOString() : String(lead.createdAt),
     updatedAt: lead.updatedAt ? (lead.updatedAt instanceof Date ? lead.updatedAt.toISOString() : String(lead.updatedAt)) : undefined,
     notes: (lead.notes || []).map((note: any) => ({
@@ -30,9 +33,13 @@ export async function createLead(data: Omit<Lead, "_id" | "createdAt" | "updated
 }) {
   await connectDB();
   const lead = await LeadModel.create({
-    _id: data.id,
     ...data,
+    _id: data.id,
+    id: data.id,
+    leadId: data.leadId || data.id,
     email: data.email || "",
+    jornayaLeadId: data.jornayaLeadId || data.jornaya_lead_id || "",
+    jornaya_lead_id: data.jornayaLeadId || data.jornaya_lead_id || "",
     country: data.country || "",
     city: data.city || "",
     state_province: data.state_province || "",
@@ -50,7 +57,8 @@ export async function getLeads(filter: Record<string, string | string[] | undefi
   await connectDB();
   const query: Record<string, unknown> = {};
   if (filter.id) {
-    query._id = String(filter.id);
+    const id = String(filter.id);
+    query.$or = [{ _id: id }, { id }, { leadId: id }];
   }
   if (filter.search) {
     const search = String(filter.search).trim();
@@ -59,6 +67,7 @@ export async function getLeads(filter: Record<string, string | string[] | undefi
       { last_name: new RegExp(search, "i") },
       { phone: new RegExp(search, "i") },
       { email: new RegExp(search, "i") },
+      { jornayaLeadId: new RegExp(search, "i") },
       { jornaya_lead_id: new RegExp(search, "i") }
     ];
   }
@@ -81,19 +90,19 @@ export async function getLeads(filter: Record<string, string | string[] | undefi
 
 export async function getLeadById(id: string) {
   await connectDB();
-  const lead = await LeadModel.findById(id).lean();
+  const lead = await LeadModel.findOne({ $or: [{ _id: id }, { id }, { leadId: id }] }).lean();
   return lead ? normalizeLead(lead) : null;
 }
 
 export async function updateLeadStatus(id: string, status: LeadStatus) {
   await connectDB();
-  return LeadModel.findByIdAndUpdate(id, { status }, { new: true }).lean();
+  return LeadModel.findOneAndUpdate({ $or: [{ _id: id }, { id }, { leadId: id }] }, { status }, { new: true }).lean();
 }
 
 export async function addLeadNote(id: string, text: string, admin_name: string) {
   await connectDB();
-  return LeadModel.findByIdAndUpdate(
-    id,
+  return LeadModel.findOneAndUpdate(
+    { $or: [{ _id: id }, { id }, { leadId: id }] },
     { $push: { notes: { text, admin_name, createdAt: new Date().toISOString() } } },
     { new: true }
   ).lean();

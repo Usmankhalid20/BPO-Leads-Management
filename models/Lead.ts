@@ -11,6 +11,8 @@ const NoteSchema = new Schema(
 const LeadSchema = new Schema(
   {
     _id: { type: String, required: true },
+    id: { type: String, required: true, unique: true, index: true },
+    leadId: { type: String, required: true, unique: true, index: true },
     first_name: { type: String, required: true, index: true },
     last_name: { type: String, required: true, index: true },
     dob: { type: String, required: true },
@@ -19,6 +21,7 @@ const LeadSchema = new Schema(
     gender: { type: String, required: true },
     phone: { type: String, required: true, index: true },
     email: { type: String, default: "" },
+    jornayaLeadId: { type: String, required: false, default: "", index: true },
     jornaya_lead_id: { type: String, required: false, default: "", index: true },
     ip_address: { type: String, required: true },
     status: {

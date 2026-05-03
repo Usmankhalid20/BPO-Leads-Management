@@ -18,10 +18,11 @@ export async function POST(request: NextRequest) {
     const requestIp = getRequestIP(request);
     const ipLookup = await enrichIpAddress(requestIp);
     const referenceId = randomUUID();
-    const jornayaLeadId = String(data.jornaya_lead_id || "");
+    const jornayaLeadId = String(data.jornayaLeadId || data.jornaya_lead_id || "").trim() || randomUUID();
 
     const lead = await createLead({
       id: referenceId,
+      leadId: referenceId,
       first_name: String(data.first_name),
       last_name: String(data.last_name),
       dob: String(data.dob),
@@ -30,6 +31,7 @@ export async function POST(request: NextRequest) {
       gender: String(data.gender),
       phone: String(data.phone),
       email: String(data.email || ""),
+      jornayaLeadId,
       jornaya_lead_id: jornayaLeadId,
       ip_address: ipLookup.ip_address,
       country: ipLookup.country,
@@ -47,7 +49,7 @@ export async function POST(request: NextRequest) {
       insurance_type: "Medicare"
     });
 
-    return NextResponse.json({ ok: true, id: lead.id, leadId: lead.id, jornaya_lead_id: lead.jornaya_lead_id });
+    return NextResponse.json({ ok: true, id: lead.id, leadId: lead.id, jornayaLeadId: lead.jornaya_lead_id, jornaya_lead_id: lead.jornaya_lead_id });
   } catch (err) {
     console.error("[POST /api/leads]", err);
     return NextResponse.json(
