@@ -1,0 +1,32 @@
+name: build Next js app
+
+on:
+  push:
+     branches: [ main ]
+
+
+jobs:
+   build:
+    runs-on: ubuntu-latest
+
+ steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js 
+      uses: actions/setup-node@v4
+      with:
+        node-version: 22.x
+        cache: 'npm'
+
+    - name: Install dependencies
+      run: npm install 
+
+    - name: Build Next.js app
+      run: npm run build
+
+    - name: Upload build Artifact
+      users: actions/upload-artifact@v7.0.1
+
+      name: nextjs-build
+      path: out/
+         
+     
